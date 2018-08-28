@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StarRating from '../StarRating';
+import { connect } from 'react-redux';
 
 const MovieCard = (props) => (
     <div className="movie-card">
@@ -14,7 +15,7 @@ const MovieCard = (props) => (
             <div className="card-footer">
                 <div className="clearfix">
                     <div className="float-left mt-1">
-                        <StarRating rating={props.movie.rating} />
+                        <StarRating movieIndex={props.movieIndex} rating={props.movie.rating} setRating={(state) => props.setRating(state)} />
                     </div>
                     <div className="card-footer-badge float-right badge badge-primary badge-pill">{props.movie.rating}</div>
                 </div>
@@ -31,4 +32,27 @@ MovieCard.propTypes = {
     movie: PropTypes.object
 };
 
-export default MovieCard;
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+        movies: state
+    };
+};
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setRating: (e) => {
+            var rating = e.target.id.split('_')[0];
+            var index = e.target.id.split('_')[1];
+            dispatch({
+                type: 'SET_RATING',
+                payload: rating,
+                index: index
+            });
+        }
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieCard);

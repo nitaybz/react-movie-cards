@@ -2,19 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MovieCard from './MovieCard';
 
-const getMovies = (movies) => {
-    return (
-        <div className="card-deck">
-            {
-                movies.map(movie => <MovieCard key={movie.id} movie={movie} />)
-            }
-        </div>
-    );
-};
 
 const MovieList = (props) => (
-    <div>
-        {getMovies(props.movies)}
+    <div className="card-deck">
+        {props.movies.map(movie => <MovieCard key={props.movies.indexOf(movie)}  movieIndex={props.movies.indexOf(movie)} movie={props.movies[props.movies.indexOf(movie)]} />)}
     </div>
 );
 
