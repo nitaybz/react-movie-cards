@@ -5,20 +5,28 @@ import './styles/app.scss';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-const reducer = (state = [], action) => {
+const initialState = {
+    movies: []
+};
+
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-    case 'SET_RATING':
-        state[action.index].rating = action.payload;
-        var newState = [
-            ...state
-        ];
-        newState[action.index].rating = action.payload;
+    case 'SET_RATING': {
+        const movie = state.movies.find((mov) => {
+            return mov.id === action.payload.id;
+        });
+        var newState = { movies: state.movies.map((movie) => { return Object.assign({}, movie); }) };
+        newState.movies[state.movies.indexOf(movie)].rating = action.payload.rating;
         return newState;
-    case 'STORE_MOVIE':
-        return state = [
-            ...state,
-            action.payload
-        ];
+    }
+    case 'STORE_MOVIES': {
+        return {
+            movies: [
+                ...state.movies,
+                ...action.payload.movies
+            ]
+        };
+    }
     }
 };
 

@@ -15,7 +15,7 @@ const MovieCard = (props) => (
             <div className="card-footer">
                 <div className="clearfix">
                     <div className="float-left mt-1">
-                        <StarRating movieIndex={props.movieIndex} rating={props.movie.rating} setRating={(state) => props.setRating(state)} />
+                        <StarRating movie={props.movie} setRating={(starNumber, id) => props.setRating(starNumber, id)} />
                     </div>
                     <div className="card-footer-badge float-right badge badge-primary badge-pill">{props.movie.rating}</div>
                 </div>
@@ -32,26 +32,21 @@ MovieCard.propTypes = {
     movie: PropTypes.object
 };
 
-const mapStateToProps = (state) => {
-    return {
-        movies: state
-    };
-};
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setRating: (e) => {
-            var rating = e.target.id.split('_')[0];
-            var index = e.target.id.split('_')[1];
+        setRating: (rating, id) => {
             dispatch({
                 type: 'SET_RATING',
-                payload: rating,
-                index: index
+                payload: {
+                    rating,
+                    id
+                },
             });
         }
     };
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MovieCard);
+export default connect(() => { return {}; }, mapDispatchToProps)(MovieCard);

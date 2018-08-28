@@ -25,18 +25,16 @@ const cropWidth = (rating) => {
 
 const StarRating = (props) => {
 
-    const containerStyle = { width: `${cropWidth(props.rating)}px` };
+    const containerStyle = { width: `${cropWidth(props.movie.rating)}px` };
     
     return (
         <div>
             <div style={styles.starsOuter}>
                 <div style={containerStyle}>
                     <div style={styles.starsEmptyInner}>
-                        <i id={'1_'+props.movieIndex} className="fa fa-star-o fa-lg" style={styles.star} onClick={props.setRating}></i>
-                        <i id={'2_'+props.movieIndex} className="fa fa-star-o fa-lg" style={styles.star} onClick={props.setRating}></i>
-                        <i id={'3_'+props.movieIndex} className="fa fa-star-o fa-lg" style={styles.star} onClick={props.setRating}></i>
-                        <i id={'4_'+props.movieIndex} className="fa fa-star-o fa-lg" style={styles.star} onClick={props.setRating}></i>
-                        <i id={'5_'+props.movieIndex} className="fa fa-star-o fa-lg" style={styles.star} onClick={props.setRating}></i>
+                        {[1,2,3,4,5].map((starNumber) => 
+                            <i className="fa fa-star-o fa-lg" key={props.movie.id + '_' + starNumber} style={styles.star} onClick={() => { props.setRating(starNumber, props.movie.id); }}></i>
+                        )}
                     </div>
                     <div style={styles.starsInner}>
                         <i className="fa fa-star fa-lg" style={styles.star}></i>

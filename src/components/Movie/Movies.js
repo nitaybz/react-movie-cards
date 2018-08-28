@@ -6,9 +6,8 @@ import { connect } from 'react-redux';
 class Movies extends Component {
 
     componentDidMount() {
-        MovieService.getMovies().map(movie => {
-            this.props.storeMovie(movie);
-        });
+        const movies = MovieService.getMovies();
+        this.props.storeMovies(movies);
     }
 
     render() {
@@ -26,17 +25,17 @@ class Movies extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        movies: state
+        movies: state ? state.movies : []
     };
 };
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        storeMovie: (movie) => {
+        storeMovies: (movies) => {
             dispatch({
-                type: 'STORE_MOVIE',
-                payload: movie
+                type: 'STORE_MOVIES',
+                payload: { movies }
             });
         }
     };
